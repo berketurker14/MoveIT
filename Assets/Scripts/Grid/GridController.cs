@@ -7,6 +7,8 @@ public class GridController : MonoBehaviour
     public float actionCooldown = 1.0f;
     public List<MovementActionPattern> MovementActionPatterns;
 
+    public GameObject player;
+
     public Vector2Int currentGridPosition;
     private float currentCooldown = 0.0f;
     private List<Vector2Int> currentMovementSequence = new List<Vector2Int>();
@@ -20,7 +22,7 @@ public class GridController : MonoBehaviour
 
     private void Start()
     {
-        currentGridPosition = GetGridPosition(transform.position);
+        currentGridPosition = GetGridPosition(player.transform.position);
     }
 
     private void Update()
@@ -34,15 +36,37 @@ public class GridController : MonoBehaviour
         float horizontalInput = Input.GetAxisRaw("Horizontal");
         float verticalInput = Input.GetAxisRaw("Vertical");
 
-        if (horizontalInput != 0.0f || verticalInput != 0.0f)
+        if ((horizontalInput != 0.0f || verticalInput != 0.0f) && !player.GetComponent<PlayerController>().moving)
         {
-            Vector2Int direction = new Vector2Int(Mathf.RoundToInt(horizontalInput), Mathf.RoundToInt(verticalInput));
+            Vector2Int direction;
+            if (Input.GetKeyDown(KeyCode.UpArrow))
+            {
+                direction = new Vector2Int(0, 1);
+            }
+            else if (Input.GetKeyDown(KeyCode.DownArrow))
+            {
+                direction = new Vector2Int(0, -1);
+            }
+            else if (Input.GetKeyDown(KeyCode.LeftArrow))
+            {
+                direction = new Vector2Int(-1, 0);
+            }
+            else if (Input.GetKeyDown(KeyCode.RightArrow))
+            {
+                direction = new Vector2Int(1, 0);
+            }
+            else
+            {
+                direction = new Vector2Int(Mathf.RoundToInt(horizontalInput), Mathf.RoundToInt(verticalInput));
+            }
             Vector2Int nextGridPosition = currentGridPosition + direction;
 
             if (IsGridPositionValid(nextGridPosition))
             {
+                player.GetComponent<PlayerController>().MoveTo(nextGridPosition);
+                player.GetComponent<PlayerController>().moving = true;
                 currentGridPosition = nextGridPosition;
-                transform.position = GetWorldPosition(currentGridPosition);
+                //transform.position = GetWorldPosition(currentGridPosition);
 
                 currentMovementSequence.Add(direction);
 

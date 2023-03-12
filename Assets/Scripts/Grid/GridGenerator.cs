@@ -17,7 +17,7 @@ public class GridGenerator : MonoBehaviour
         {
             for (int y = 0; y < height; y++)
             {
-                Vector2 position = new Vector2(x * spacing, y * spacing) - offset;
+                Vector2 position = new Vector2(x * spacing + 0.5f, y * spacing + 0.5f) - offset;
                 Instantiate(spritePrefab, transform.position + (Vector3)position, Quaternion.identity, transform);
             }
         }
