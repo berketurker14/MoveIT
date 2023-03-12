@@ -175,6 +175,11 @@ MonoBehaviour:
   MovementActionPatterns: []
   player: {fileID: 1982139873}
   currentGridPosition: {x: 0, y: 0}
+<<<<<<< Updated upstream
+=======
+  currentCooldown: 0
+  currentMovementSequence: []
+>>>>>>> Stashed changes
 --- !u!4 &464633814
 Transform:
   m_ObjectHideFlags: 0
@@ -203,6 +208,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   actionCooldown: 1
+<<<<<<< Updated upstream
+=======
+  currentCooldown: 0
+  currentActionSequence: []
+>>>>>>> Stashed changes
 --- !u!1 &1982139873
 GameObject:
   m_ObjectHideFlags: 0
@@ -234,6 +244,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 2
+<<<<<<< Updated upstream
+=======
+  _targetPosition: {x: 0, y: 0, z: 0}
+>>>>>>> Stashed changes
   moving: 0
 --- !u!212 &1982139875
 SpriteRenderer:
@@ -284,7 +298,11 @@ SpriteRenderer:
   m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
+<<<<<<< Updated upstream
   m_WasSpriteAssigned: 1
+=======
+  m_WasSpriteAssigned: 0
+>>>>>>> Stashed changes
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!4 &1982139876
@@ -406,7 +424,10 @@ MonoBehaviour:
   m_Cameras: []
   m_RendererIndex: -1
   m_VolumeLayerMask:
+<<<<<<< Updated upstream
     serializedVersion: 2
+=======
+>>>>>>> Stashed changes
     m_Bits: 1
   m_VolumeTrigger: {fileID: 0}
   m_VolumeFrameworkUpdateModeOption: 2
