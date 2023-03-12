@@ -11,7 +11,7 @@ public class Witch : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log("Selam");
+        
         //if (collision.gameObject.tag == "Player")
         //{
             OpenClosePanel(!isPanelOpen);

@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8368f5f356304046ad99602bd4bba84, type: 3}
+  m_Name: Slime-2
+  m_EditorClassIdentifier: 
+  enemyName: Slime_2
+  enemyPrefab: {fileID: 8058902245993244932, guid: aa85c487d9e60dc419456059c7a8d42b, type: 3}
+  health: 150
+  experience: 34
+  damage: 25
+  deathParticleEffect: {fileID: 7795347667737666691, guid: 9f68112dfa3ad7f48b3539b524854bab, type: 3}
