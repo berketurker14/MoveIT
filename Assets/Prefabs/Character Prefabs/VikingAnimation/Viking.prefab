@@ -927,6 +927,8 @@ GameObject:
   - component: {fileID: -419977356574220565}
   - component: {fileID: -3591472660412191270}
   - component: {fileID: 6696618038130825107}
+  - component: {fileID: -3007714402802743743}
+  - component: {fileID: 8572025314550311632}
   m_Layer: 0
   m_Name: Viking
   m_TagString: Untagged
@@ -1017,6 +1019,42 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 5
   moving: 0
+--- !u!114 &-3007714402802743743
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6399563079517430050}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a14e701946d1ba545a96e0a847c390ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 100
+  strength: 10
+  dexterity: 10
+  intelligence: 10
+--- !u!95 &8572025314550311632
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6399563079517430050}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 7ae519814aca150449a1b3d87c076368, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &6518458083838624249
 GameObject:
   m_ObjectHideFlags: 0
