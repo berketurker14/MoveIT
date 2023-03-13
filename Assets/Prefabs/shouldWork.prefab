@@ -97,5 +97,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d176339f8a60b648ba43a9280e02c58, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lightGreen: {r: 0.4339623, g: 0, b: 0, a: 0}
-  lighterGreen: {r: 0.8018868, g: 0, b: 0, a: 0}
+  lightGreen: {r: 0.37375522, g: 1, b: 0, a: 0}
+  lighterGreen: {r: 0.14631534, g: 1, b: 0, a: 0}
