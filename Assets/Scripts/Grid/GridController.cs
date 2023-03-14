@@ -36,7 +36,7 @@ public class GridController : MonoBehaviour
         float horizontalInput = Input.GetAxisRaw("Horizontal");
         float verticalInput = Input.GetAxisRaw("Vertical");
 
-        if ((horizontalInput != 0.0f || verticalInput != 0.0f) && !player.GetComponent<PlayerController>().moving)
+        if ((horizontalInput != 0.0f || verticalInput != 0.0f) && currentCooldown <= 0.0f && !player.GetComponent<PlayerController>().moving)
         {
             Vector2Int direction;
             if (Input.GetKeyDown(KeyCode.UpArrow))
@@ -57,14 +57,13 @@ public class GridController : MonoBehaviour
             }
             else
             {
-                direction = new Vector2Int(Mathf.RoundToInt(horizontalInput), Mathf.RoundToInt(verticalInput));
+                return (false, PatternType.Direct);
             }
             Vector2Int nextGridPosition = currentGridPosition + direction;
 
             if (IsGridPositionValid(nextGridPosition))
             {
                 player.GetComponent<PlayerController>().MoveTo(nextGridPosition);
-                player.GetComponent<PlayerController>().moving = true;
                 currentGridPosition = nextGridPosition;
                 //transform.position = GetWorldPosition(currentGridPosition);
 
@@ -117,8 +116,8 @@ public class GridController : MonoBehaviour
 
     public Vector3 GetWorldPosition(Vector2Int gridPosition)
     {
-        float x = gridPosition.x * gridSize;
-        float y = gridPosition.y * gridSize;
+        float x = gridPosition.x * gridSize + 0.5f * gridPosition.x;
+        float y = gridPosition.y * gridSize + 0.5f * gridPosition.y;
         return new Vector3(x, y, transform.position.z);
     }
 

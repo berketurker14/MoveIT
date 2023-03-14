@@ -11,6 +11,10 @@ public class GridGenerator : MonoBehaviour
 
     void Start()
     {
+        float characterLength = GridController.Instance.player.transform.lossyScale.y;
+        spritePrefab.transform.localScale = new Vector3(characterLength * 3 / 2, characterLength * 3 / 2, 0);
+        spacing = spritePrefab.transform.lossyScale.y;
+
         Vector2 offset = new Vector2((width - 1) * spacing / 2f, (height - 1) * spacing / 2f);
 
         for (int x = 0; x < width; x++)
