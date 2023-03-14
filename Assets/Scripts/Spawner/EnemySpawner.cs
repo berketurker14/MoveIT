@@ -1,26 +1,43 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
     public EnemyStats[] enemyList;
     public GameObject player;
+    public float totalEnemiesAlive = 0;
+    public int level = 0;
+    [HideInInspector] public static EnemySpawner instance;
+
+    private void Awake()
+    {
+        instance = this;
+    }
     private void Start()
     {
-        SpawnEnemies();
-    }
-    public void SpawnEnemies()
-    {
-        for (int i = 0; i < 10; i++)
+        for (int i = 0; i < 45; i++)
         {
-            Vector2Int randomGridPosition = GetRandomGridPosition();
-            GameObject enemyPrefab = GetRandomEnemyPrefab();
-            Instantiate(enemyPrefab, GetWorldPosition(randomGridPosition), Quaternion.identity);
+            SpawnEnemy();
         }
     }
+    public GameObject SpawnEnemy()
+    {
+        Vector2Int randomGridPosition = GetRandomGridPosition();
+        GameObject enemyPrefab = GetRandomEnemyPrefab();
+        GameObject spawnedEnemy = Instantiate(enemyPrefab, GetWorldPosition(randomGridPosition), Quaternion.identity);
+        if (!spawnedEnemy.GetComponent<Enemy>())
+        {
+            spawnedEnemy.AddComponent<Enemy>();
+            Enemy.instance.RandomizeEnemyType(level,spawnedEnemy);
+        }
+        totalEnemiesAlive++;
+        Enemy.instance.RandomizeEnemyType(level, spawnedEnemy);
+        return spawnedEnemy;
+    }
 
-    private Vector2Int GetRandomGridPosition()
+    public Vector2Int GetRandomGridPosition()
     {
         Vector2Int playerGridPosition = GridController.Instance.GetGridPosition(player.transform.position);
 
@@ -36,7 +53,7 @@ public class EnemySpawner : MonoBehaviour
         return enemyList[randomIndex].enemyPrefab;
     }
 
-    private Vector3 GetWorldPosition(Vector2Int gridPosition)
+    public Vector3 GetWorldPosition(Vector2Int gridPosition)
     {
         return GridController.Instance.GetWorldPosition(gridPosition);
     }

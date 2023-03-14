@@ -7,13 +7,12 @@ public class PlayerController : MonoBehaviour
     public float speed = 1f;
     private Vector3 _targetPosition;
     public bool moving = false;
-    private Animator _animator;
-    private bool _facingRight = true;
+
 
     private void Start()
     {
         _targetPosition = transform.position;
-        _animator = GetComponent<Animator>();
+
     }
 
     private void Update()
@@ -23,37 +22,19 @@ public class PlayerController : MonoBehaviour
         if (transform.position == _targetPosition)
         {
             moving = false;
-            // Player has reached the target position, play "idle" animation
-            _animator.SetBool("MovingLeft", false);
-            _animator.SetBool("MovingRight", false);
-            _animator.Play("idle");
         }
 
         // Check player's movement direction
         float horizontalInput = Input.GetAxisRaw("Horizontal");
-        if (horizontalInput > 0 && !_facingRight)
+        if (horizontalInput > 0)
         {
-            // Start "runTowards" animation
-            _animator.SetBool("MovingLeft", false);
-            _animator.SetBool("MovingRight", true);
-            _animator.Play("runTowards");
-            _facingRight = true;
-            if (!moving)
-            {
-                moving = true;
-            }
+            // Flip the player's sprite horizontally
+            transform.localScale = new Vector3(0.48f,0.48f,0.48f);
         }
-        else if (horizontalInput < 0 && _facingRight)
+        else if (horizontalInput < 0)
         {
-            // Start "run" animation
-            _animator.SetBool("MovingRight", false);
-            _animator.SetBool("MovingLeft", true);
-            _animator.Play("run");
-            _facingRight = false;
-            if (!moving)
-            {
-                moving = true;
-            }
+            // Flip the player's sprite horizontally
+            transform.localScale = new Vector3(-0.48f, 0.48f, 0.48f);
         }
     }
 
