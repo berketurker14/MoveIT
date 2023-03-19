@@ -12,16 +12,16 @@ public class ItemDrop : MonoBehaviour
     {
         Instance = this;
     }
-    public void RandomizeItemDropChance()
+    public void RandomizeItemDropChance(Vector3 enemyPos)
     {
         int chance = Random.Range(1, 66); // Roll a 1/65 chance
         if (chance == 1)
         {
-            RandomizeRarity(); // If item is dropped, determine its rarity
+            RandomizeRarity(enemyPos); // If item is dropped, determine its rarity
         }
     }
 
-    public void RandomizeRarity()
+    public void RandomizeRarity(Vector3 spawnPosition)
     {
         int rarityIndex = Random.Range(0, rarities.Length); // Pick a random rarity
         string rarity = rarities[rarityIndex];
@@ -39,11 +39,12 @@ public class ItemDrop : MonoBehaviour
 
         if (filteredItems.Count > 0)
         {
-            Vector3 targetPosition = new Vector3(GridController.Instance.currentGridPosition.x, GridController.Instance.currentGridPosition.y, 0f);
+            Vector2Int gridPosition = GridController.Instance.GetGridPosition(spawnPosition);
+            Vector3 alignedSpawnPosition = GridController.Instance.GetWorldPosition(gridPosition);
             // Drop a random item of the selected rarity
             int itemIndex = Random.Range(0, filteredItems.Count);
             GameObject itemToDrop = filteredItems[itemIndex];
-            Instantiate(itemToDrop, targetPosition, Quaternion.identity);
+            Instantiate(itemToDrop, alignedSpawnPosition, Quaternion.identity);
         }
     }
 }
