@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 208fab1a4bf758a40a8375d90c9fe7c9, type: 3}
   m_Name: Common1
   m_EditorClassIdentifier: 
-  item: {fileID: 0}
+  item: {fileID: 1937080484, guid: a2642e2142adc174d82f5017b173e55a, type: 3}
   effect: {fileID: 0}
   name: Rusty Hatchet
   definition: A basic, but serviceable axe that's seen better days.
-  rarityValue: 100
+  rarity: 0

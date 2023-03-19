@@ -10,7 +10,7 @@ public class LevelUpSelection : MonoBehaviour
     private void Start()
     {
         Init();
-        _playerStats = GridController.Instance.player.GetComponent<PlayerStats>();
+        _playerStats = PlayerStats.Instance;
     }
 
     private void Init()
@@ -23,15 +23,19 @@ public class LevelUpSelection : MonoBehaviour
     public void LevelUpStrength(int strength)
     {
         _playerStats.strength += strength;
+        Time.timeScale = 1f;
+        CollectExperience.Instance.levelUpMenu.SetActive(false);
     }
     public void LevelUpIntelligence(int intelligence)
     {
         _playerStats.intelligence += intelligence;
-
+        Time.timeScale = 1f;
+        CollectExperience.Instance.levelUpMenu.SetActive(false);
     }
     public void LevelUpDexterity(int dexterity)
     {
         _playerStats.dexterity += dexterity;
-
+        Time.timeScale = 1f;
+        CollectExperience.Instance.levelUpMenu.SetActive(false);
     }
 }

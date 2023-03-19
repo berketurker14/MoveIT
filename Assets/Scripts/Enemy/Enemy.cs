@@ -85,7 +85,8 @@ public class Enemy : MonoBehaviour
         enemySpawner.totalEnemiesAlive--;
         transform.position = objectPool.transform.position;
         gameObject.SetActive(false);
-        ItemDrop.Instance.RandomizeItemDropChance(transform.position);
+        ItemDrop.Instance.RandomizeItemDropChance();
+        Experience.Instance.DropExperience(this.experience);
         if (enemySpawner.totalEnemiesAlive <= objectPool.enemyPoolSize)
         {
             Debug.Log("Total Enemies Alive:" + enemySpawner.totalEnemiesAlive);
