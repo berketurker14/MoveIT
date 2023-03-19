@@ -8,7 +8,6 @@ public class Enemy : MonoBehaviour
     public Vector2Int currentGridPos;
     public Vector2Int targetGridPos;
     public Vector2Int[] moveDirections;
-
     public float moveTime = 0.5f;
     private float turnTimer = 0f;
     public float turnTime = 1f;
@@ -20,123 +19,126 @@ public class Enemy : MonoBehaviour
     [HideInInspector] public EnemySpawner enemySpawner;
     public EnemyTypeHolder enemyTypeHolder;
     public static Enemy instance;
+    public float checkRadius = 0.5f;
+    public int gridObstacleLayer;
+    private bool isInitialMove = true;
 
     private void Awake()
     {
         instance = this;
         enemyTypeHolder = EnemyTypeHolder.instance;
+        gridObstacleLayer = 0;
     }
 
     private void Start()
     {
-        // Set up move directions for the enemy
         moveDirections = new Vector2Int[] { Vector2Int.up, Vector2Int.right, Vector2Int.down, Vector2Int.left };
-        MoveTowards(GridController.Instance.currentGridPosition);
         enemySpawner = EnemySpawner.instance;
         objectPool = ObjectPool.instance;
+        currentGridPos = GridController.Instance.GetGridPosition(transform.position);
+        turnTime = Random.Range(0.3f, 1.7f);
+        StartCoroutine(MoveRoutine());
     }
 
     private void Update()
     {
         Move();
-        UpdateHealth();
+    }
+
+    private IEnumerator MoveRoutine()
+    {
+        while (true)
+        {
+            MoveTowards(GridController.Instance.GetGridPosition(GridController.Instance.player.transform.position));
+            UpdateHealth();
+            yield return new WaitForSeconds(turnTime); // Wait for 1 second before calling Move() again
+        }
     }
 
     private void Move()
     {
-        // Increment the turn timer
         turnTimer += Time.deltaTime;
 
-        // If the turn timer is greater than the move time, move the enemy
-        if (turnTimer >= turnTime)
-        {
-            // Reset the turn timer
-            turnTimer = 0f;
-
-            //transform.position = GridController.Instance.GetWorldPosition(targetGridPos);
-
-            // Move the enemy
-            MoveTowards(GridController.Instance.currentGridPosition);
-        }
-
-
-        // Increment the timer for the current move
         timer += Time.deltaTime;
-
-        // Calculate the percentage of the move completed based on the timer and moveTime
         float t = Mathf.Clamp01(timer / moveTime);
 
-        // Move towards the target grid position
         Vector3 targetPos = GridController.Instance.GetWorldPosition(targetGridPos);
         Vector3 direction = (targetPos - transform.position).normalized;
         Vector3 newPos = transform.position + direction * moveSpeed * Time.deltaTime;
 
-        // Snap the new position to the grid
         Vector2Int newGridPos = new Vector2Int(Mathf.RoundToInt(newPos.x), Mathf.RoundToInt(newPos.y));
 
-        // If the new grid position is different from the current grid position, move to the new grid position
         if (newGridPos != currentGridPos)
         {
-            // Set the new grid position as the current grid position
             currentGridPos = targetGridPos;
-
-            // Reset the timer for the new move
             timer = 0f;
         }
 
-        // Interpolate between the current position and the target position based on the percentage of the move completed
         transform.position = Vector3.MoveTowards(transform.position, targetPos, Time.deltaTime * moveSpeed);
     }
-
     public void MoveTowards(Vector2Int destinationGridPos)
     {
-        Debug.Log("MoveTowards");
-        if (destinationGridPos == currentGridPos)
+        if (isInitialMove)
         {
-            // The player is on the same grid position as the enemy
+            ChooseRandomDirection();
+            isInitialMove = false;
             return;
         }
-        // Get the direction to move in
+
+        if (destinationGridPos == currentGridPos)
+        {
+            return;
+        }
         Vector2Int direction = destinationGridPos - currentGridPos;
 
         if (Mathf.Abs(direction.x) > Mathf.Abs(direction.y))
         {
-            // Move in the x direction
             if (direction.x > 0)
             {
-                // Move right
                 targetGridPos = currentGridPos + Vector2Int.right;
             }
             else
             {
-                // Move left
                 targetGridPos = currentGridPos + Vector2Int.left;
             }
         }
         else
         {
-            // Move in the y direction
             if (direction.y > 0)
             {
-                // Move up
                 targetGridPos = currentGridPos + Vector2Int.up;
             }
             else
             {
-                // Move down
                 targetGridPos = currentGridPos + Vector2Int.down;
             }
         }
 
-        // Reset the timer for the new mov
+        if (!IsGridPositionAvailable(targetGridPos))
+        {
+            ChooseRandomDirection();
+        }
+
         timer = 0f;
     }
-
+    // Ekrandaki render olaylarını kontrol et
+    private bool IsGridPositionAvailable(Vector2Int gridPos)
+    {
+        Vector2 worldPos = GridController.Instance.GetWorldPosition(gridPos);
+        Vector2 boxSize = new Vector2(checkRadius * 2, checkRadius * 2);
+        Collider2D collider = Physics2D.OverlapBox(worldPos, boxSize, 0f, gridObstacleLayer);
+        Debug.DrawLine(transform.position, worldPos, Color.red, 1f);
+        return collider == null;
+    }
 
     private void ChooseRandomDirection()
     {
-        Vector2Int randomDir = moveDirections[Random.Range(0, moveDirections.Length)];
-        targetGridPos = currentGridPos + randomDir;
+        Vector2Int randomDir;
+        do
+        {
+            randomDir = moveDirections[Random.Range(0, moveDirections.Length)];
+            targetGridPos = currentGridPos + randomDir;
+        } while (!IsGridPositionAvailable(targetGridPos));
     }
 
     private void UpdateHealth()
