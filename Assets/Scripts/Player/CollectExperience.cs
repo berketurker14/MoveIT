@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 using Slider = UnityEngine.UI.Slider;
+using DG.Tweening;
 
 public class CollectExperience : MonoBehaviour
 {
@@ -18,32 +19,26 @@ public class CollectExperience : MonoBehaviour
     void OnTriggerEnter2D(Collider2D col)
     {
         if (col.CompareTag("Experience"))
+    {
+        // check if the experience object has already been collected
+        if (col.gameObject.GetComponent<Experience>().isCollected == false)
         {
-            // check if the experience object has already been collected
-            if (col.gameObject.GetComponent<Experience>().isCollected == false)
-            {
-                // get the experience value of the collected object
-                float experienceValue = col.GetComponent<Experience>().value;
+            // get the experience value of the collected object
+            float experienceValue = col.GetComponent<Experience>().value;
 
-                // increase the slider's value by the collected object's experience value
-                experienceSlider.value += experienceValue;
-                ControlLevelUp();
+            // increase the slider's value by the collected object's experience value
+            experienceSlider.value += experienceValue;
+            ControlLevelUp();
 
-                // move the collected object towards the center of this object
-                Vector3 targetPosition = transform.position;
-                col.transform.position = Vector3.MoveTowards(col.transform.position, targetPosition, moveSpeed * Time.deltaTime);
+            // create a DOTween sequence to move the collected object towards the center of this object and then destroy it
+            Sequence sequence = DOTween.Sequence();
+            sequence.Append(col.transform.DOMove(transform.position, moveSpeed))
+                    .AppendCallback(() => Destroy(col.gameObject));
 
-                // check if the collected object has reached the target position
-                if (col.transform.position == targetPosition)
-                {
-                    // mark the experience object as collected
-                    col.gameObject.GetComponent<Experience>().isCollected = true;
-
-                    // destroy the collected object
-                    Destroy(col.gameObject);
-                }
-            }
+            // mark the experience object as collected
+            col.gameObject.GetComponent<Experience>().isCollected = true;
         }
+    }
     }
 
     void ControlLevelUp()

@@ -82,11 +82,11 @@ public class Enemy : MonoBehaviour
 
     private void OnEnemyDeath()
     {
+        Experience.Instance.DropExperience(this.experience, CollectExperience.Instance.experienceObject, transform.position);
         enemySpawner.totalEnemiesAlive--;
         transform.position = objectPool.transform.position;
-        gameObject.SetActive(false);
         ItemDrop.Instance.RandomizeItemDropChance();
-        Experience.Instance.DropExperience(this.experience);
+        gameObject.SetActive(false);
         if (enemySpawner.totalEnemiesAlive <= objectPool.enemyPoolSize)
         {
             Debug.Log("Total Enemies Alive:" + enemySpawner.totalEnemiesAlive);

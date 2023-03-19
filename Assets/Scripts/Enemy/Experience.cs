@@ -14,10 +14,7 @@ public class Experience : MonoBehaviour
         Instance = this;
     }
 
-    private void Start()
-    {
-        experienceObject = CollectExperience.Instance.experienceObject;
-    }
+
     public void SetValue(float expValue)
     {
         value = expValue;
@@ -28,10 +25,12 @@ public class Experience : MonoBehaviour
         return value;
     }
 
-    public void DropExperience(float expValue)
+    public void DropExperience(float expValue, GameObject experienceObject, Vector3 spawnPosition)
     {
-        Vector3 targetPosition = new Vector3(GridController.Instance.currentGridPosition.x, GridController.Instance.currentGridPosition.y, 0f);
-        Instantiate(experienceObject, targetPosition, Quaternion.identity);
-        SetValue(expValue);
+        Vector2Int gridPosition = GridController.Instance.GetGridPosition(spawnPosition);
+        Vector3 alignedSpawnPosition = GridController.Instance.GetWorldPosition(gridPosition);
+        GameObject temp = Instantiate(experienceObject, alignedSpawnPosition, Quaternion.identity);
+        temp.GetComponent<Experience>().SetValue(expValue);
     }
+
 }
