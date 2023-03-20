@@ -25,12 +25,17 @@ public class EnemySpawner : MonoBehaviour
     public GameObject SpawnEnemy()
     {
         Vector2Int randomGridPosition = GetRandomGridPosition();
+        while (!GridController.Instance.IsGridPositionAvailable(randomGridPosition))
+        {
+            randomGridPosition = GetRandomGridPosition();
+        }
+        GridController.Instance.SetGridPositionOccupied(randomGridPosition, true);
         GameObject enemyPrefab = GetRandomEnemyPrefab();
         GameObject spawnedEnemy = Instantiate(enemyPrefab, GetWorldPosition(randomGridPosition), Quaternion.identity);
         if (!spawnedEnemy.GetComponent<Enemy>())
         {
             spawnedEnemy.AddComponent<Enemy>();
-            Enemy.instance.RandomizeEnemyType(level,spawnedEnemy);
+            Enemy.instance.RandomizeEnemyType(level, spawnedEnemy);
         }
         totalEnemiesAlive++;
         Enemy.instance.RandomizeEnemyType(level, spawnedEnemy);

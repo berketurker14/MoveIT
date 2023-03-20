@@ -114,10 +114,13 @@ public class Enemy : MonoBehaviour
             }
         }
 
-        if (!IsGridPositionAvailable(targetGridPos))
+        if (!GridController.Instance.IsGridPositionAvailable(targetGridPos))
         {
             ChooseRandomDirection();
         }
+
+        GridController.Instance.SetGridPositionOccupied(currentGridPos, false);
+        GridController.Instance.SetGridPositionOccupied(targetGridPos, true);
 
         timer = 0f;
     }
@@ -133,12 +136,20 @@ public class Enemy : MonoBehaviour
 
     private void ChooseRandomDirection()
     {
+        int randomPositionTryCount = 0;
         Vector2Int randomDir;
         do
         {
+            if (randomPositionTryCount > 4)
+            {
+                Debug.LogError("Could not find a random position after 4 tries");
+                targetGridPos = currentGridPos;
+                return;
+            }
+            randomPositionTryCount++;
             randomDir = moveDirections[Random.Range(0, moveDirections.Length)];
             targetGridPos = currentGridPos + randomDir;
-        } while (!IsGridPositionAvailable(targetGridPos));
+        } while (!GridController.Instance.IsGridPositionAvailable(targetGridPos));
     }
 
     private void UpdateHealth()

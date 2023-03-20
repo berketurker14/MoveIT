@@ -13,11 +13,15 @@ public class GridController : MonoBehaviour
     private float currentCooldown = 0.0f;
     private List<Vector2Int> currentMovementSequence = new List<Vector2Int>();
 
+    private Dictionary<Vector2Int, bool> occupiedGridPositions;
+
+
     public static GridController Instance { get; private set; }
 
     private void Awake()
     {
         Instance = this;
+        occupiedGridPositions = new Dictionary<Vector2Int, bool>();
     }
 
     private void Start()
@@ -61,7 +65,7 @@ public class GridController : MonoBehaviour
             }
             Vector2Int nextGridPosition = currentGridPosition + direction;
 
-            if (IsGridPositionValid(nextGridPosition))
+            if (IsGridPositionAvailable(nextGridPosition))
             {
                 player.GetComponent<PlayerController>().MoveTo(nextGridPosition);
                 player.GetComponent<PlayerController>().moving = true;
@@ -91,7 +95,7 @@ public class GridController : MonoBehaviour
 
                             foreach (Vector2Int actionPosition in actionPositions)
                             {
-                                if (IsGridPositionValid(actionPosition))
+                                if (IsGridPositionAvailable(actionPosition))
                                 {
                                     // Perform action logic for each valid position here
                                 }
@@ -122,10 +126,21 @@ public class GridController : MonoBehaviour
         return new Vector3(x, y, transform.position.z);
     }
 
-    public bool IsGridPositionValid(Vector2Int gridPosition)
+    public bool IsGridPositionAvailable(Vector2Int gridPosition)
     {
-        // Perform any necessary validation checks here
-        return true;
+        return !occupiedGridPositions.ContainsKey(gridPosition);
+    }
+
+    public void SetGridPositionOccupied(Vector2Int gridPosition, bool isOccupied)
+    {
+        if (isOccupied)
+        {
+            occupiedGridPositions[gridPosition] = true;
+        }
+        else
+        {
+            occupiedGridPositions.Remove(gridPosition);
+        }
     }
 
     /*     private List<Vector2Int> GetActionPositions(Dictionary<Vector2Int, int> actionOffsets)
