@@ -1,0 +1,169 @@
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #f0f0f0;
+}
+
+.container {
+    max-width: 90%;
+    padding: 20px;
+    background-color: white;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+
+h1 {
+    margin: 0 0 20px;
+}
+
+.main-section {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.left-panel {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    margin-right: 20px;
+}
+
+.right-panel {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+}
+
+.dark .left-panel {
+    background-color: #1f1f1f;
+}
+
+.dark .right-panel {
+    background-color: #1f1f1f;
+}
+
+.grid-container {
+    display: grid;
+    gap: 2px;
+    margin-bottom: 20px;
+    background-color: #ccc;
+    padding: 2px;
+}
+
+
+.grid-item {
+    width: 40px;
+    height: 40px;
+    background-color: #eee;
+    border: 1px solid #ccc;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.grid-item.selected {
+    background-color: #64dd17;
+}
+
+.button {
+    margin: 5px 0;
+}
+
+/* Update the existing button styles */
+button {
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 5px 2px;
+    cursor: pointer;
+    padding: 10px 24px;
+    border-radius: 4px;
+}
+
+button:focus {
+    outline: none;
+}
+
+.grid-item.origin {
+    background-color: #ff9800;
+    color: white;
+}
+
+.result-section {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.output-container {
+    flex-grow: 1;
+    max-width: 200px;
+    max-height: 50px;
+    overflow-y: auto;
+    overflow-x: auto;
+    border: 1px solid #ccc;
+    padding: 10px;
+    background-color: #f0f0f0;
+    white-space: pre-wrap;
+}
+
+body.dark {
+    background-color: #121212;
+}
+
+.dark .container {
+    background-color: #1f1f1f;
+    color: #f0f0f0;
+}
+
+.dark .grid-container {
+    background-color: #2b2b2b;
+}
+
+.dark .grid-item {
+    background-color: #333;
+    border-color: #222;
+}
+
+.dark .grid-item.selected {
+    background-color: #00c853;
+}
+
+.dark .grid-item.origin {
+    background-color: #ff6d00;
+}
+
+.dark button {
+    background-color: #bb86fc;
+}
+
+.footer {
+    margin-top: 20px;
+}
+
+.footer a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.footer a:hover {
+    text-decoration: underline;
+}
+
+.dark .footer a {
+    color: #90caf9;
+}

@@ -29,7 +29,7 @@ public class PlayerController : MonoBehaviour
         if (horizontalInput > 0)
         {
             // Flip the player's sprite horizontally
-            transform.localScale = new Vector3(0.48f,0.48f,0.48f);
+            transform.localScale = new Vector3(0.48f, 0.48f, 0.48f);
         }
         else if (horizontalInput < 0)
         {

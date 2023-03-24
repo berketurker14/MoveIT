@@ -4,7 +4,7 @@ using System.Collections.Generic;
 public class Action
 {
     public ActionType actionType;
-    public List<Vector2Int> attackOffsets;
+    public List<Vector2Int> actionOffsets;
     public RangeType rangeType;
     public PatternType patternType;
 
@@ -24,7 +24,7 @@ public class Action
         switch (rangeType)
         {
             case RangeType.Single:
-                actionOffsets.Add(Vector2Int.zero);
+                actionOffsets = new List<Vector2Int> { new Vector2Int(3, -1), new Vector2Int(3, -2), new Vector2Int(1, -3), new Vector2Int(2, -3), new Vector2Int(3, -3) };
                 break;
             case RangeType.Cross:
                 actionOffsets.Add(Vector2Int.zero);
@@ -60,7 +60,7 @@ public class Action
                 actionOffsets.Add(Vector2Int.right * 2);
                 break;
             case RangeType.Custom:
-                actionOffsets = attackOffsets;
+                actionOffsets = actionOffsets;
                 break;
         }
 

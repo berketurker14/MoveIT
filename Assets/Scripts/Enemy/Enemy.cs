@@ -189,14 +189,11 @@ public class Enemy : MonoBehaviour
         {
             int randomIndex = Random.Range(0, enemies.Count);
             EnemyStats randomEnemy = enemies[randomIndex];
-            Debug.Log("Selam");
             // Do something with the randomly selected EnemyStats
             spawnedEnemy.GetComponent<Enemy>().health = randomEnemy.health;
             spawnedEnemy.GetComponent<Enemy>().damage = randomEnemy.damage;
             spawnedEnemy.GetComponent<Enemy>().experience = randomEnemy.experience;
-            Debug.Log("Test1");
             spawnedEnemy.GetComponent<SpriteRenderer>().sprite = randomEnemy.enemyPrefab.GetComponent<SpriteRenderer>().sprite;
-            Debug.Log("Test2");
             spawnedEnemy.GetComponent<Enemy>().enemyName = randomEnemy.enemyName;
             Debug.Log("Randomly selected enemy: " + randomEnemy.enemyName);
         }
